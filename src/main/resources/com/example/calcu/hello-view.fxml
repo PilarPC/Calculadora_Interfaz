@@ -30,7 +30,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="ACbt" mnemonicParsing="false" onAction="#ACck" prefHeight="48.0" prefWidth="182.0" text="AC" GridPane.columnSpan="3">
+            <Button fx:id="ACbt" mnemonicParsing="false" onAction="#ACck" prefHeight="48.0" prefWidth="58.0" text="AC" GridPane.columnSpan="3">
                <font>
                   <Font size="18.0" />
                </font>
@@ -113,6 +113,16 @@
             <Button fx:id="igualbt" mnemonicParsing="false" onAction="#ckigual" prefHeight="50.0" prefWidth="60.0" style="-fx-background-color: orange;" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <font>
                   <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="idHistorial" mnemonicParsing="false" onAction="#ckHistorial" prefHeight="51.0" prefWidth="58.0" text="H" GridPane.columnIndex="2">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#ckTablaEventos" prefHeight="48.0" prefWidth="73.0" text="E" GridPane.columnIndex="1">
+               <font>
+                  <Font size="21.0" />
                </font>
             </Button>
          </children>
