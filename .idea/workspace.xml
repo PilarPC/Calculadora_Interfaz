@@ -4,28 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da022e45-dc34-4750-b48f-563f41d95225" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/calcu/hiloEnviaMensajes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+    <list default="true" id="02de74e1-bcce-4599-81e6-4b32c8a2d713" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calcu/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calcu/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calcu/hiloEnviaMensajes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calcu/hiloEnviaMensajes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/paquete/Paquete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/paquete/Paquete.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/calcu/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/calcu/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/calcu/RegistroResultados.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/calcu/RegistroResultados.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="FxmlFile" />
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,41 +29,26 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2Fuxmw85Vm2CHKj7PanUw7p0rgb" />
+  <component name="ProjectId" id="2GjXja92w1T9aLuKZ2oMabVF1Dv" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/IJ/proyectos/calculadoraPHistorial/calculadoraP/Nodo&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "D:/IJ/proyectos/Respaldo Claculadora/Calcu"
   }
-}</component>
-  <component name="RunManager">
-    <configuration name="HelloApplication" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.calcu.HelloApplication" />
-      <module name="Calcu" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.calcu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="da022e45-dc34-4750-b48f-563f41d95225" name="Changes" comment="" />
-      <created>1665355934432</created>
+      <changelist id="02de74e1-bcce-4599-81e6-4b32c8a2d713" name="Changes" comment="" />
+      <created>1666903104190</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1665355934432</updated>
+      <updated>1666903104190</updated>
     </task>
     <servers />
   </component>
@@ -88,10 +62,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Calcu$HelloApplication.ic" NAME="HelloApplication Coverage Results" MODIFIED="1666416284497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>com.example.calcu.*</FILTER>
-    </SUITE>
   </component>
 </project>

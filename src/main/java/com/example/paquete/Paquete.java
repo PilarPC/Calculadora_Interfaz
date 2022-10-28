@@ -73,6 +73,22 @@ public class Paquete  implements Serializable {
         this.acuse = acuse;
     }
 
+    public String getTiempoAcuse() {
+        return tiempoAcuse;
+    }
+
+    public void setTiempoAcuse(String tiempoAcuse) {
+        this.tiempoAcuse = tiempoAcuse;
+    }
+
+    public int getAcusesRecibidos() {
+        return acusesRecibidos;
+    }
+
+    public void setAcusesRecibidos(int acusesRecibidos) {
+        this.acusesRecibidos = acusesRecibidos;
+    }
+
 
     public String mensaje;
     public int puertoEmisor;
@@ -86,5 +102,11 @@ public class Paquete  implements Serializable {
 
 
     String acuse;
+
+
+    String tiempoAcuse = " ";
+
+    int acusesRecibidos = 0;
+
 
 }

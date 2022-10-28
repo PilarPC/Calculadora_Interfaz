@@ -17,10 +17,7 @@ import java.net.Socket;
 import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class HelloController implements Runnable{
@@ -177,13 +174,32 @@ public class HelloController implements Runnable{
         lipiaPantalla();
     }
 
+    Paquete Nuevo_paquete(Paquete r){
 
+        Paquete paquete1=new Paquete(r.getMensaje(),r.getPuertoEmisor(),r.getIDdireccion(),r.getCodigoOperacion(),r.getHuellaCliente(),r.getHuellaServidor());
+        paquete1.setIDdireccion('O');
+        paquete1.setCodigoOperacion('a');
+        paquete1.setHuellaCliente(huella);
+        paquete1.setHuellaServidor(paquete1.getHuellaServidor());
+        paquete1.setEvento(r.getEvento());
+        paquete1.setTiempoAcuse(r.getTiempoAcuse());
+        paquete1.setAcusesRecibidos(r.getAcusesRecibidos());
+        return paquete1;
+    }
     public void enviarHilo(){
         List<Paquete> litaEventos = new ArrayList<>();
-        if (listaSuma.size() > 0){litaEventos.add(listaSuma.get(0));}
-        if (listaResta.size() > 0){litaEventos.add(listaResta.get(0));}
-        if (listaMustiplicacion.size() > 0){litaEventos.add(listaMustiplicacion.get(0));}
-        if (listaDivision.size() > 0){litaEventos.add(listaDivision.get(0));}
+        if (listaSuma.size() > 0){
+            litaEventos.add(Nuevo_paquete(listaSuma.get(0)));
+        }
+        if (listaResta.size() > 0){
+            litaEventos.add(Nuevo_paquete(listaResta.get(0)));
+        }
+        if (listaMustiplicacion.size() > 0){
+            litaEventos.add(Nuevo_paquete(listaMustiplicacion.get(0)));
+        }
+        if (listaDivision.size() > 0){
+            litaEventos.add(Nuevo_paquete(listaDivision.get(0)));
+        }
          hiloEnvia.listaEventosGlobal = litaEventos;
     }
     public void agregar_a_lista (Paquete paquete){
@@ -281,8 +297,99 @@ public class HelloController implements Runnable{
         return devuelvesha1;
     }
 
+    public Paquete recuperarEventos(String eventoEnLista){
+        for (Paquete paqueteS :listaSuma){
+            if (paqueteS.getEvento().equals(eventoEnLista)){
+                return paqueteS;
+            }
+        }
+        for (Paquete paqueteR :listaResta){
+            if (paqueteR.getEvento().equals(eventoEnLista)){
+                return paqueteR;
+            }
+        }
+        for (Paquete paqueteM :listaMustiplicacion){
+            if (paqueteM.getEvento().equals(eventoEnLista)){
+                return paqueteM;
+            }
+        }
+        for (Paquete paqueteD :listaDivision){
+            if (paqueteD.getEvento().equals(eventoEnLista)){
+                return paqueteD;
+            }
+        }
 
+        return null;//Refresa el mismo paquete
+    }
 
+    public int buscarAcuseMinimo(String eventoEnLista){
+        for (Paquete paqueteS :listaSuma){
+            if (paqueteS.getEvento().equals(eventoEnLista)){
+                return ACUSE_MIN_SUMA;
+            }
+        }
+        for (Paquete paqueteR :listaResta){
+            if (paqueteR.getEvento().equals(eventoEnLista)){
+                return ACUSE_MIN_RESTA;
+            }
+        }
+        for (Paquete paqueteM :listaMustiplicacion){
+            if (paqueteM.getEvento().equals(eventoEnLista)){
+                return ACUSE_MIN_MULT;
+            }
+        }
+        for (Paquete paqueteD :listaDivision){
+            if (paqueteD.getEvento().equals(eventoEnLista)){
+                return ACUSE_MIN_DIV;
+            }
+        }
+
+        return 0;//Refresa el mismo paquete
+    }
+    void rellenarLista(List<Paquete> original,List<Paquete>  copia){
+        for(Paquete elemento:original){
+            copia.add(elemento);
+        }
+    }
+    public boolean eliminarDeLista(String eliminarEvento){
+        List<Paquete> copiaS = new ArrayList<>();
+        rellenarLista(listaSuma,copiaS);
+        List<Paquete> copiaR = new ArrayList<>();
+        rellenarLista(listaSuma,copiaR);
+        List<Paquete> copiaM = new ArrayList<>();
+        rellenarLista(listaSuma,copiaM);
+        List<Paquete> copiaD = new ArrayList<>();
+        rellenarLista(listaSuma,copiaD);
+        for (Paquete paqueteS: listaSuma ) {
+            if (paqueteS.getEvento().equals(eliminarEvento)){
+                copiaS.remove(paqueteS);
+                listaSuma=copiaS;
+                return true;
+            }
+        }
+        for (Paquete paqueteR :listaResta){
+            if (paqueteR.getEvento().equals(eliminarEvento)){
+                copiaR.remove(paqueteR);
+                listaResta=copiaR;
+                return true;
+            }
+        }
+        for (Paquete paqueteM :listaMustiplicacion){
+            if (paqueteM.getEvento().equals(eliminarEvento)){
+                copiaM.remove(paqueteM);
+                listaMustiplicacion=copiaM;
+                return true;
+            }
+        }
+        for (Paquete paqueteD :listaDivision){
+            if (paqueteD.getEvento().equals(eliminarEvento)){
+                copiaD.remove(paqueteD);
+                listaDivision=copiaD;
+                return true;
+            }
+        }
+       return false;
+    }
 
 
 
@@ -304,14 +411,14 @@ public class HelloController implements Runnable{
         int puertoMiddleware = 11000;
         while (true){
             try{
-                enviarHilo();
                 servidor=new ServerSocket(puertoCalculadora);
                 System.out.println("estoy en el puerto"+ puertoCalculadora);
                 PUERTO_MIDDLEWARE= puertoMiddleware;
                 PUERTO_ACTUAL = puertoCalculadora;
                 hiloEnvia.PUERTO_MIDDLEWARE = PUERTO_MIDDLEWARE;
                 hiloEnvia.start();
-                //-------------------------------------- GENERO HUELLA -----------------
+                //-
+                // ------------------------------------- GENERO HUELLA -----------------
                 String puertoString= PUERTO_ACTUAL+"";
                 huella = generarHuella(puertoString);
                 System.out.println("Huella generada por mi puerto actual "+PUERTO_ACTUAL +" "+huella);
@@ -320,22 +427,36 @@ public class HelloController implements Runnable{
 
                 //-------------------------------- RECIBO PAQUETE -----------------------------
                 while(true){
+                    enviarHilo(); //envio al hilo
                     Socket misocket=servidor.accept();//aceptara las conexiones que vengan del exterior
                     ObjectInputStream flujoEntrada=new ObjectInputStream(misocket.getInputStream());
                     Paquete data = (Paquete)flujoEntrada.readObject();
-
-                    System.out.println(data);
                     historial.add(data.mensaje);
-                    System.out.println("ACUSE: "+data.getAcuse());
-
-
+                    System.out.println("Soy un paquete que llega con el codigo de operacion "+data.getCodigoOperacion());
+                    //System.out.println(data);
+                    //System.out.println("ACUSE: "+data.getAcuse());
 
                     if (data.getCodigoOperacion() == 'm' & data.getHuellaCliente().equals(huella)){
+                        Paquete paqueteRecuperado =  recuperarEventos(data.getEvento());
+                        //System.out.println("recuperado "+paqueteRecuperado.getTiempoAcuse().length()+" externo"+data.getTiempoAcuse().length());
+                        if (paqueteRecuperado.getTiempoAcuse().equals(data.getTiempoAcuse())){
+                            paqueteRecuperado.setAcusesRecibidos(paqueteRecuperado.getAcusesRecibidos()+1);
+                            System.out.println("misma ronda");
+                        }else {
+                            System.out.println("solo yo");
+                            paqueteRecuperado.setTiempoAcuse(data.getTiempoAcuse());
+                            paqueteRecuperado.setAcusesRecibidos(1);
+                        }
                         //IMPRIMIR EN DISPLAY
-                        Platform.runLater(()->{
-                            lipiaPantalla();
-                            digitoPantalla(data.mensaje);
-                        });
+                        int acuseMinimo = buscarAcuseMinimo(paqueteRecuperado.getEvento());
+                        if (paqueteRecuperado.getAcusesRecibidos() >= acuseMinimo){
+
+                            Platform.runLater(()->{
+                                lipiaPantalla();
+                                digitoPantalla(data.mensaje);
+                            });
+                            eliminarDeLista(paqueteRecuperado.getEvento());//elimino el evento
+                        }
                     }else {System.out.println("La información probiene de la calculadora");}
                     misocket.close();
                 }

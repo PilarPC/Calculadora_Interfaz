@@ -19,6 +19,8 @@ public class hiloEnviaMensajes extends Thread {
         while (true){
             for (Paquete evento:listaEventosLocal) {
                 try {
+                    //System.out.println("Envio evento "+evento.getEvento()+" mensaje "+evento.mensaje);
+                    evento.setTiempoAcuse(evento.getTiempoAcuse()+"S");
                     Socket misoket = new Socket("127.0.0.1",PUERTO_MIDDLEWARE);
                     ObjectOutputStream flujoSalida = new ObjectOutputStream(misoket.getOutputStream());
                     flujoSalida.writeObject(evento); //para que el nodo reciba el nuevo paquete
@@ -28,7 +30,7 @@ public class hiloEnviaMensajes extends Thread {
                     e.printStackTrace();
                 }
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(5000);//10000
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
