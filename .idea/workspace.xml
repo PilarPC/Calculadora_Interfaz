@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02de74e1-bcce-4599-81e6-4b32c8a2d713" name="Changes" comment="">
+    <list default="true" id="7e2ff698-05a8-4616-8630-90068961055a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calcu/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calcu/HelloController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calcu/hiloEnviaMensajes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calcu/hiloEnviaMensajes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/paquete/Paquete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/paquete/Paquete.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/calcu/RegistroResultados.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/calcu/RegistroResultados.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +29,7 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2GjXja92w1T9aLuKZ2oMabVF1Dv" />
+  <component name="ProjectId" id="2HyU9SAN2FE4XjCASjEI9xKbD5k" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -38,17 +38,32 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/IJ/proyectos/Respaldo Claculadora/Calcu"
+    "last_opened_file_path": "D:/IJ/proyectos/Respaldo Claculadora/AdministradorCerlulas"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.calcu.HelloApplication" />
+      <module name="Calcu" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.calcu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="02de74e1-bcce-4599-81e6-4b32c8a2d713" name="Changes" comment="" />
-      <created>1666903104190</created>
+      <changelist id="7e2ff698-05a8-4616-8630-90068961055a" name="Changes" comment="" />
+      <created>1669256665647</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1666903104190</updated>
+      <updated>1669256665647</updated>
     </task>
     <servers />
   </component>

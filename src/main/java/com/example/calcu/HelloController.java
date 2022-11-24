@@ -150,27 +150,51 @@ public class HelloController implements Runnable{
 
     @FXML
     void ckigual() {
-        try {
-            Socket misoket = new Socket("127.0.0.1",PUERTO_MIDDLEWARE);
-            ObjectOutputStream flujoSalida = new ObjectOutputStream(misoket.getOutputStream());
-            //DataOutputStream flujoSalida = new DataOutputStream(misoket.getOutputStream());
-            Paquete nuevoPaquete = new Paquete(paquete.getMensaje(),paquete.getPuertoEmisor(), paquete.getIDdireccion(), paquete.getCodigoOperacion(),paquete.getHuellaCliente(),paquete.getHuellaServidor());
-            System.out.println(paquete.getMensaje()+" "+paquete.getPuertoEmisor()+" "+paquete.getIDdireccion()+" llega a puerto MW "+PUERTO_MIDDLEWARE);
-            paquete.setHuellaCliente(huella);
-            nuevoPaquete.setHuellaCliente(huella);
-            String evento = generarHuella(paquete.getMensaje());
-            paquete.setEvento(evento);
-            nuevoPaquete.setEvento(evento);
-            nuevoPaquete.setCodigoOperacion(paquete.getCodigoOperacion());
-            agregar_a_lista(nuevoPaquete);//agrego el evento a la lista
-            enviarHilo();
+        int mandar = 0;
+        while (mandar<4)
+        {
+            try {
+                Socket misoket = new Socket("127.0.0.1",PUERTO_MIDDLEWARE);
+                ObjectOutputStream flujoSalida = new ObjectOutputStream(misoket.getOutputStream());
+                //DataOutputStream flujoSalida = new DataOutputStream(misoket.getOutputStream());
+                Paquete nuevoPaquete = new Paquete(paquete.getMensaje(),paquete.getPuertoEmisor(), paquete.getIDdireccion(), paquete.getCodigoOperacion(),paquete.getHuellaCliente(),paquete.getHuellaServidor());
+                System.out.println(paquete.getMensaje()+" "+paquete.getPuertoEmisor()+" "+paquete.getIDdireccion()+" llega a puerto MW "+PUERTO_MIDDLEWARE);
+                paquete.setHuellaCliente(huella);
+                nuevoPaquete.setHuellaCliente(huella);
+                String evento = generarHuella(paquete.getMensaje());
+                paquete.setEvento(evento);
+                nuevoPaquete.setEvento(evento);
+                nuevoPaquete.setCodigoOperacion(paquete.getCodigoOperacion());
+                agregar_a_lista(nuevoPaquete);//agrego el evento a la lista
+                enviarHilo();
 
-            flujoSalida.writeObject(nuevoPaquete); //para que el nodo reciba el nuevo paquete
-            flujoSalida.close();
+                flujoSalida.writeObject(nuevoPaquete); //para que el nodo reciba el nuevo paquete
+                flujoSalida.close();
+                mandar=5;
+                break;
 
-        }catch (IOException e){
-            e.printStackTrace();
+            }catch (IOException e){
+                PUERTO_MIDDLEWARE++;
+                e.printStackTrace();
+            }
+            mandar++;
+            try {
+                Socket enviaReceptor=new Socket("127.0.0.1", PUERTO_MIDDLEWARE);
+                ObjectOutputStream paqueteReenvio=new ObjectOutputStream(enviaReceptor.getOutputStream());
+                Paquete conocerCalcu = new Paquete(" ", PUERTO_ACTUAL, 'N', 'z', " ", " ");
+                conocerCalcu.setIDdireccion('N');
+                conocerCalcu.setCodigoOperacion('z');
+                paqueteReenvio.writeObject(conocerCalcu);
+                paqueteReenvio.close();
+                enviaReceptor.close();
+                hiloEnvia.PUERTO_MIDDLEWARE = PUERTO_MIDDLEWARE;
+
+            } catch(IOException e) {
+                //System.out.println(e);
+                // System.out.println("servidor apagado: "+puerto);
+            }
         }
+
         lipiaPantalla();
     }
 
@@ -184,12 +208,14 @@ public class HelloController implements Runnable{
         paquete1.setEvento(r.getEvento());
         paquete1.setTiempoAcuse(r.getTiempoAcuse());
         paquete1.setAcusesRecibidos(r.getAcusesRecibidos());
+        paquete1.setClon(r.getClon());
         return paquete1;
     }
     public void enviarHilo(){
         List<Paquete> litaEventos = new ArrayList<>();
         if (listaSuma.size() > 0){
             litaEventos.add(Nuevo_paquete(listaSuma.get(0)));
+
         }
         if (listaResta.size() > 0){
             litaEventos.add(Nuevo_paquete(listaResta.get(0)));
@@ -200,7 +226,7 @@ public class HelloController implements Runnable{
         if (listaDivision.size() > 0){
             litaEventos.add(Nuevo_paquete(listaDivision.get(0)));
         }
-         hiloEnvia.listaEventosGlobal = litaEventos;
+        hiloEnvia.listaEventosGlobal = litaEventos;
     }
     public void agregar_a_lista (Paquete paquete){
         if(paquete.getCodigoOperacion() == 'a'){
@@ -321,6 +347,34 @@ public class HelloController implements Runnable{
 
         return null;//Refresa el mismo paquete
     }
+    public Paquete agregarHuella(String eventoEnLista,String huella){
+        for (Paquete paqueteS :listaSuma){
+            if (paqueteS.getEvento().equals(eventoEnLista)){
+                paqueteS.setClon(huella);
+                return paqueteS;
+            }
+        }
+        for (Paquete paqueteR :listaResta){
+            if (paqueteR.getEvento().equals(eventoEnLista)){
+                paqueteR.setClon(huella);
+                return paqueteR;
+            }
+        }
+        for (Paquete paqueteM :listaMustiplicacion){
+            if (paqueteM.getEvento().equals(eventoEnLista)){
+                paqueteM.setClon(huella);
+                return paqueteM;
+            }
+        }
+        for (Paquete paqueteD :listaDivision){
+            if (paqueteD.getEvento().equals(eventoEnLista)){
+                paqueteD.setClon(huella);
+                return paqueteD;
+            }
+        }
+
+        return null;//Refresa el mismo paquete
+    }
 
     public int buscarAcuseMinimo(String eventoEnLista){
         for (Paquete paqueteS :listaSuma){
@@ -388,7 +442,7 @@ public class HelloController implements Runnable{
                 return true;
             }
         }
-       return false;
+        return false;
     }
 
 
@@ -416,6 +470,19 @@ public class HelloController implements Runnable{
                 PUERTO_MIDDLEWARE= puertoMiddleware;
                 PUERTO_ACTUAL = puertoCalculadora;
                 hiloEnvia.PUERTO_MIDDLEWARE = PUERTO_MIDDLEWARE;
+                try {
+                    Socket enviaReceptor=new Socket("127.0.0.1",puertoMiddleware);
+                    ObjectOutputStream paqueteReenvio=new ObjectOutputStream(enviaReceptor.getOutputStream());
+                    Paquete conocerCalcu = new Paquete(" ", puertoCalculadora, 'N', 'z', " ", " ");
+                    conocerCalcu.setIDdireccion('N');
+                    conocerCalcu.setCodigoOperacion('z');
+                    paqueteReenvio.writeObject(conocerCalcu);
+                    paqueteReenvio.close();
+                    enviaReceptor.close();
+                } catch(IOException e) {
+                    //System.out.println(e);
+                    // System.out.println("servidor apagado: "+puerto);
+                }
                 hiloEnvia.start();
                 //-
                 // ------------------------------------- GENERO HUELLA -----------------
@@ -435,30 +502,53 @@ public class HelloController implements Runnable{
                     System.out.println("Soy un paquete que llega con el codigo de operacion "+data.getCodigoOperacion());
                     //System.out.println(data);
                     //System.out.println("ACUSE: "+data.getAcuse());
+                    if(data.getCodigoOperacion() == 'h'){
+                        ACUSE_MIN_SUMA = data.getAcusesActualizadosSuma();
+                        ACUSE_MIN_RESTA = data.getAcusesActualizadosResta();
+                        ACUSE_MIN_MULT = data.getAcusesActualizadosMultiplicacion();
+                        ACUSE_MIN_DIV = data.getAcusesActualizadosDivision();
 
-                    if (data.getCodigoOperacion() == 'm' & data.getHuellaCliente().equals(huella)){
-                        Paquete paqueteRecuperado =  recuperarEventos(data.getEvento());
-                        //System.out.println("recuperado "+paqueteRecuperado.getTiempoAcuse().length()+" externo"+data.getTiempoAcuse().length());
-                        if (paqueteRecuperado.getTiempoAcuse().equals(data.getTiempoAcuse())){
-                            paqueteRecuperado.setAcusesRecibidos(paqueteRecuperado.getAcusesRecibidos()+1);
-                            System.out.println("misma ronda");
-                        }else {
-                            System.out.println("solo yo");
-                            paqueteRecuperado.setTiempoAcuse(data.getTiempoAcuse());
-                            paqueteRecuperado.setAcusesRecibidos(1);
-                        }
-                        //IMPRIMIR EN DISPLAY
-                        int acuseMinimo = buscarAcuseMinimo(paqueteRecuperado.getEvento());
-                        if (paqueteRecuperado.getAcusesRecibidos() >= acuseMinimo){
+                    }
+                    if (data.getCodigoOperacion() == 'm' & data.getHuellaCliente().equals(huella)) {
 
-                            Platform.runLater(()->{
-                                lipiaPantalla();
-                                digitoPantalla(data.mensaje);
-                            });
-                            eliminarDeLista(paqueteRecuperado.getEvento());//elimino el evento
+                        Paquete paqueteRecuperado = recuperarEventos(data.getEvento());
+                        if (paqueteRecuperado != null) {
+                            //System.out.println("recuperado "+paqueteRecuperado.getTiempoAcuse().length()+" externo"+data.getTiempoAcuse().length());
+                            if (paqueteRecuperado.getTiempoAcuse().equals(data.getTiempoAcuse())) {
+                                paqueteRecuperado.setAcusesRecibidos(paqueteRecuperado.getAcusesRecibidos() + 1);
+                                System.out.println("misma ronda");
+                            } else {
+                                System.out.println("solo yo");
+                                paqueteRecuperado.setTiempoAcuse(data.getTiempoAcuse());
+                                paqueteRecuperado.setAcusesRecibidos(1);
+                            }
+                            if((paqueteRecuperado.getTiempoAcuse().length())%2==0){
+                                //buscar huellaServidor más grande
+                                paqueteRecuperado.setClon(data.getHuellaServidor());
+                                System.out.println("Mando guella a clonar "+data.getHuellaServidor());
+                                System.out.println("Longitud "+paqueteRecuperado.getTiempoAcuse().length());
+                                agregarHuella(paqueteRecuperado.getEvento(), data.getHuellaServidor());
+
+                            }else{
+                                paqueteRecuperado.setClon("nono");
+                                agregarHuella(paqueteRecuperado.getEvento(), "nono");
+                            }
+                            //IMPRIMIR EN DISPLAY
+                            int acuseMinimo = buscarAcuseMinimo(paqueteRecuperado.getEvento());
+                            if (paqueteRecuperado.getAcusesRecibidos() >= acuseMinimo) {
+
+                                Platform.runLater(() -> {
+                                    lipiaPantalla();
+                                    digitoPantalla(data.mensaje);
+                                });
+                                eliminarDeLista(paqueteRecuperado.getEvento());//elimino el evento
+                            }
+
+                        } else {
+                            System.out.println("La información probiene de la calculadora");
                         }
-                    }else {System.out.println("La información probiene de la calculadora");}
-                    misocket.close();
+                        misocket.close();
+                    }
                 }
 
             }
@@ -471,5 +561,8 @@ public class HelloController implements Runnable{
         }
 
     }
+
+
+
 }
 

@@ -15,6 +15,11 @@ public class hiloEnviaMensajes extends Thread {
 
     @Override // para usar polimorfismo
     public void run(){
+        try {
+            Thread.sleep(4000);//10000
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         while (true){
             for (Paquete evento:listaEventosLocal) {
@@ -23,6 +28,7 @@ public class hiloEnviaMensajes extends Thread {
                     evento.setTiempoAcuse(evento.getTiempoAcuse()+"S");
                     Socket misoket = new Socket("127.0.0.1",PUERTO_MIDDLEWARE);
                     ObjectOutputStream flujoSalida = new ObjectOutputStream(misoket.getOutputStream());
+
                     flujoSalida.writeObject(evento); //para que el nodo reciba el nuevo paquete
                     flujoSalida.close();
 
